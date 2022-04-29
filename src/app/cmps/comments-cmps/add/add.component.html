@@ -1,0 +1,18 @@
+<section class="add-cmp">
+    <ng-container *ngIf="currUser">
+        <div class="add-preview">
+            <img class="user-pic" src="../../assets/{{currUser.id}}.jpg">
+            <form (ngSubmit)="addComment(form)" #form="ngForm">
+                <label for="comment"></label>
+                <textarea
+                ngModel
+                type="text"
+                name="comment"
+                placeholder="Add new comment"
+                required
+                ></textarea>
+            <button>Add</button>
+            </form>
+        </div>
+    </ng-container>
+</section>

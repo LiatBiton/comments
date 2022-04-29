@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from '../models/user.model';
-import { UserService } from '../services/user/user.service';
+import { User } from '../../models/user.model';
+import { Comment } from '../../models/comment.model';
+import { CommentService } from '../../services/comment/comment.service';
+import { UserService } from '../../services/user/user.service';
 
 @Component({
   selector: 'app-main',
@@ -11,13 +13,20 @@ import { UserService } from '../services/user/user.service';
 export class MainComponent implements OnInit {
   users$: Observable<User[]>
   currentUser$: Observable<User>
+  comments$: Observable<Comment[]>
 
-  constructor(private userService: UserService) { }
+  constructor(
+    private userService: UserService,
+    private commentService: CommentService
+    ) { }
 
   ngOnInit(): void {
     this.userService.loadUsers()
     this.users$ = this.userService.users$
     this.currentUser$ = this.userService.currentUser$
+
+    this.commentService.query()
+    this.comments$= this.commentService.comments$
   }
 
 }

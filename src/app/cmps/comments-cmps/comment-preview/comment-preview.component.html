@@ -1,0 +1,10 @@
+<section class="comment-container">
+    <div class="comment-preview">
+        <img class="user-pic" src="../../assets/{{comment.ownerId}}.jpg">
+        <div class="user">
+            <h1 class="user-name">{{(user$| async).displayName}}</h1>
+            <h2 class="message">{{comment.txt}}</h2>
+        </div>
+    </div>
+    <replies-list [replies]="comment.replies"></replies-list>
+</section>

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
 import * as EventEmitter from 'events';
-import { User } from '../models/user.model';
-import { UserService } from '../services/user/user.service';
+import { User } from '../../../models/user.model';
+import { UserService } from '../../../services/user/user.service';
 
 @Component({
   selector: 'pick-user',

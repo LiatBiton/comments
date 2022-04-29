@@ -2,24 +2,18 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Observable, BehaviorSubject, of, throwError } from 'rxjs';
 import { User } from '../../models/user.model'
+import data from '../../../assets/user.json'
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this._usersDb = data
+  }
 
-  private _usersDb: User[] = [
-    {
-      "id": 1,
-      "displayName": "Apu Nahasapeemapetilon"
-    },
-    {
-      "id": 2,
-      "displayName": "Homer J. Simpson"
-    }
-  ]
+  private _usersDb: User[]
   private _users$ = new BehaviorSubject<User[]>([]);
   public users$ = this._users$.asObservable()
 
