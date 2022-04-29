@@ -15,6 +15,8 @@ export class CommentsPreviewComponent implements OnInit {
   @Input() currUser: User
   user$: Observable<User>
   currUser$: Observable<User>
+  editMode: boolean = false
+
   constructor(
     private userService: UserService,
     private commentService: CommentService
@@ -34,4 +36,17 @@ export class CommentsPreviewComponent implements OnInit {
     :
     this.commentService.removeComment(comment.id)
   }
+
+  onEdit(){
+    this.editMode = !this.editMode
+    console.log(this.editMode)
+  }
+  onSave(newTxt){
+    this.editMode = false
+    const newComment = this.comment
+    newComment.txt = newTxt
+    console.log(newComment)
+    this.commentService.edit(newComment)
+  }
+
 }

@@ -1,15 +1,29 @@
 <section class="comment-container">
     <div class="comment-preview">
         <img class="user-pic" src="../../assets/{{comment.ownerId}}.jpg">
-        <div>
-            <div class="user">
-                <h1 class="user-name">{{(user$| async).displayName}}</h1>
-                <h2 class="message">{{comment.txt}}</h2>
-            </div>
-            <ng-container *ngIf="comment.ownerId == (currUser$ | async).id">
-                <button class="delete-btn"(click)="onDelete(comment)">delete</button>
-            </ng-container>
-        </div>
+            <ng-template [ngIf]="editMode" [ngIfElse]="txt">
+                <div>
+                    <div class="user">
+                        <h1 class="user-name">{{(user$| async).displayName}}</h1>
+                        <textarea class="edit-txt" value="{{comment.txt}}" #newTxt></textarea>
+                    </div>
+                    <button class="comment-action-btn delete-btn" (click)="onDelete(comment)">delete</button>
+                    <button class="comment-action-btn" (click)="onSave(newTxt.value)">save</button>
+                </div>
+                </ng-template>
+
+            <ng-template #txt>
+                <div>
+                    <div class="user">
+                        <h1 class="user-name">{{(user$| async).displayName}}</h1>
+                        <h2 class="message">{{comment.txt}}</h2>
+                    </div>
+                    <ng-container *ngIf="comment.ownerId == (currUser$ | async).id">
+                        <button class="comment-action-btn delete-btn"(click)="onDelete(comment)">delete</button>
+                        <button class="comment-action-btn"(click)="onEdit()">edit</button>
+                    </ng-container>
+                </div>
+            </ng-template>
     </div>
     <replies-list [replies]="comment.replies"></replies-list>
 </section>

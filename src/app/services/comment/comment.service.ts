@@ -78,4 +78,14 @@ export class CommentService {
     this._comments$.next(comments);
     return of({})
   }
+
+  public edit(comment: Comment) {
+    const comments = this._commentsDb
+    const commentIdx = comments.findIndex(_comment => _comment.id === comment.id)
+    comments.splice(commentIdx, 1, comment)
+    localStorage.setItem(this.KEY, JSON.stringify([...comments]));
+    this._comments$.next([...comments])
+    return of(comment)
+  }
+
 }
