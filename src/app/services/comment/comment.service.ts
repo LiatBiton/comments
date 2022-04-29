@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
-import { Observable, BehaviorSubject, of, throwError } from 'rxjs';
+import { Observable, BehaviorSubject, of, throwError, lastValueFrom } from 'rxjs';
 import { Comment } from '../../models/comment.model'
 import data from '../../../assets/comments.json'
 
@@ -11,16 +11,16 @@ export class CommentService {
 
   constructor(private http: HttpClient) {
     const commentsFromStorage = JSON.parse(localStorage.getItem(this.KEY));
-    
     const initialComments = commentsFromStorage ? commentsFromStorage : data;
 
     const dataView = (<Comment[]>initialComments).filter(comment => comment.parentCommentId == null)
-    this._commentsDb = dataView.map(comment => ({
-      ...comment,
-      replies: data.filter(reply => reply.parentCommentId === comment.id)
-    }));
+    this._commentsDb = dataView;
 
     if (!commentsFromStorage){
+      this._commentsDb = dataView.map(comment => ({
+        ...comment,
+        replies: data.filter(reply => reply.parentCommentId === comment.id)
+      }));
       localStorage.setItem(this.KEY, JSON.stringify([...this._commentsDb]));
     }
   }
@@ -30,6 +30,9 @@ export class CommentService {
   private _commentsDb: Comment[]
   private _comments$ = new BehaviorSubject<Comment[]>([]);
   public comments$ = this._comments$.asObservable()
+
+  private _selectedComment$ = new BehaviorSubject<Comment>(null);
+  public selectedComment$ = this._selectedComment$.asObservable();
 
   public query(){
     this._comments$.next(this._commentsDb)
@@ -42,6 +45,24 @@ export class CommentService {
     this._comments$.next([...this._commentsDb])
     return of(comment)
   }
+
+  public async addReply(newReply: Comment ){
+    const comments = this._commentsDb
+    const comment = this._selectedComment$.getValue()
+    const commentIdx = comments.findIndex(c => c.id === comment.id)
+    comments.splice(commentIdx, 1)
+    newReply.id = this._makeId()
+    newReply.parentCommentId = comment.id
+    if (!comment.replies) {
+      comment.replies = []
+    }
+    comment.replies.push(newReply)
+    comments.push(comment)
+    localStorage.setItem(this.KEY, JSON.stringify([...comments]));
+    this._comments$.next(comments)
+    return of(comment)
+  }
+
 
   public getEmptyComment() : Comment {
     return {
@@ -86,6 +107,17 @@ export class CommentService {
     localStorage.setItem(this.KEY, JSON.stringify([...comments]));
     this._comments$.next([...comments])
     return of(comment)
+  }
+
+  setSelectedComment(id: number) {
+    this.getCommentById(id).subscribe((comment) => {
+      this._selectedComment$.next(comment);
+    });
+  }
+
+  getCommentById(id: number): Observable<Comment> {
+    const comment = this._commentsDb.find((comment) => comment.id == id);
+    return comment ? of(comment) : throwError(() => `comment id ${id} wasnt found`);
   }
 
 }

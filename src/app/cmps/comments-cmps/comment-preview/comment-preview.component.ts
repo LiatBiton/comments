@@ -12,7 +12,6 @@ import { CommentService } from 'src/app/services/comment/comment.service';
 })
 export class CommentsPreviewComponent implements OnInit {
   @Input() comment: Comment
-  @Input() currUser: User
   user$: Observable<User>
   currUser$: Observable<User>
   editMode: boolean = false
@@ -47,6 +46,10 @@ export class CommentsPreviewComponent implements OnInit {
     newComment.txt = newTxt
     console.log(newComment)
     this.commentService.edit(newComment)
+  }
+
+  selectComment(commentId){
+    this.commentService.setSelectedComment(commentId)
   }
 
 }

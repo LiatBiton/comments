@@ -2,16 +2,27 @@
     <ng-container *ngIf="currUser">
         <div class="add-preview">
             <img class="user-pic" src="../../assets/{{currUser.id}}.jpg">
-            <form (ngSubmit)="addComment(form)" #form="ngForm">
+            <form (ngSubmit)="addComment(form)" #form="ngForm" class="add-form">
                 <label for="comment"></label>
-                <textarea
-                ngModel
-                type="text"
-                name="comment"
-                placeholder="Add new comment"
-                required
-                ></textarea>
-            <button>Add</button>
+                <ng-template #regularMode>
+                    <textarea
+                    ngModel
+                    type="text"
+                    name="comment"
+                    placeholder="Write a new comment.."
+                    required
+                    ></textarea>
+                </ng-template>
+                <ng-template [ngIf]="selectedComment" [ngIfElse]="regularMode">
+                    <textarea 
+                    ngModel
+                    type="text"
+                    name="comment"
+                    placeholder="reply about -- {{selectedComment.txt}}"
+                    required
+                    ></textarea>
+                </ng-template>
+            <button class="add-comment-btn">Add</button>
             </form>
         </div>
     </ng-container>
