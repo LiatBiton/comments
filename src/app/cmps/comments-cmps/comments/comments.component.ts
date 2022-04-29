@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { User } from 'src/app/models/user.model';
+import { CommentService } from 'src/app/services/comment/comment.service';
 import { Comment } from '../../../models/comment.model';
 
 @Component({
@@ -7,12 +8,13 @@ import { Comment } from '../../../models/comment.model';
   templateUrl: './comments.component.html',
   styleUrls: ['./comments.component.scss']
 })
-export class CommentsComponent implements OnInit {
+export class CommentsComponent {
   @Input() comments: Comment[]
   @Input() currUser: User
-  constructor() { }
+  constructor(private commentService: CommentService) { }
 
-  ngOnInit(): void {
+  resetSelectedComment(){
+    this.commentService.setSelectedComment(null)
   }
 
 }

@@ -13,6 +13,7 @@ import { CommentsPreviewComponent } from './cmps/comments-cmps/comment-preview/c
 import { RepliesListComponent } from './cmps/comments-cmps/replies-list/replies-list.component';
 import { AddComponent } from './cmps/comments-cmps/add/add.component';
 import { FormsModule } from '@angular/forms';
+import { DatePipe } from './pipes/date.pipe';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { FormsModule } from '@angular/forms';
     CommentsListComponent,
     CommentsPreviewComponent,
     RepliesListComponent,
-    AddComponent
+    AddComponent,
+    DatePipe,
   ],
   imports: [
     BrowserModule,

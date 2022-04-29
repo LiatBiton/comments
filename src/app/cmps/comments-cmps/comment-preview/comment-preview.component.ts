@@ -44,12 +44,14 @@ export class CommentsPreviewComponent implements OnInit {
     this.editMode = false
     const newComment = this.comment
     newComment.txt = newTxt
+    newComment.createdAt = new Date
     console.log(newComment)
     this.commentService.edit(newComment)
   }
 
-  selectComment(commentId){
-    this.commentService.setSelectedComment(commentId)
+  selectComment(ev: MouseEvent){
+    ev.stopPropagation();
+    this.commentService.setSelectedComment(this.comment.id)
   }
 
 }

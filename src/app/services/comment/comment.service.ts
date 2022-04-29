@@ -102,17 +102,29 @@ export class CommentService {
 
   public edit(comment: Comment) {
     const comments = this._commentsDb
-    const commentIdx = comments.findIndex(_comment => _comment.id === comment.id)
-    comments.splice(commentIdx, 1, comment)
+    if(comment.parentCommentId){
+      const parentIdx = comments.findIndex(_comment => _comment.id === comment.parentCommentId)
+      const replyIdx = comments[parentIdx].replies.findIndex(d => d.id === comment.id)
+      comments[parentIdx].replies[replyIdx] = comment
+    }else{
+      const commentIdx = comments.findIndex(_comment => _comment.id === comment.id)
+      comments.splice(commentIdx, 1, comment)
+      
+    }
     localStorage.setItem(this.KEY, JSON.stringify([...comments]));
-    this._comments$.next([...comments])
+      this._comments$.next([...comments])
     return of(comment)
   }
 
-  setSelectedComment(id: number) {
-    this.getCommentById(id).subscribe((comment) => {
-      this._selectedComment$.next(comment);
-    });
+  setSelectedComment(id: number | null) {
+    if (id === null){
+      this._selectedComment$.next(null);
+    }else{
+      this.getCommentById(id).subscribe((comment) => {
+        this._selectedComment$.next(comment);
+      });
+    }
+    
   }
 
   getCommentById(id: number): Observable<Comment> {
