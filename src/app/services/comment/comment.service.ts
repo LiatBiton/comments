@@ -11,7 +11,7 @@ export class CommentService {
 
   constructor(private http: HttpClient) {
     const commentsFromStorage = JSON.parse(localStorage.getItem(this.KEY));
-
+    
     const initialComments = commentsFromStorage ? commentsFromStorage : data;
 
     const dataView = (<Comment[]>initialComments).filter(comment => comment.parentCommentId == null)
@@ -19,6 +19,10 @@ export class CommentService {
       ...comment,
       replies: data.filter(reply => reply.parentCommentId === comment.id)
     }));
+
+    if (!commentsFromStorage){
+      localStorage.setItem(this.KEY, JSON.stringify([...this._commentsDb]));
+    }
   }
 
   private KEY = 'comments'
@@ -54,5 +58,24 @@ export class CommentService {
       id += possible.charAt(Math.floor(Math.random() * possible.length));
     }
     return Number(id);
+  }
+
+  public removeComment(commentId){
+    const comments = this._commentsDb
+    const commentIdx = comments.findIndex(comment => comment.id === commentId)
+    comments.splice(commentIdx, 1)
+    localStorage.setItem(this.KEY, JSON.stringify([...comments]));
+    this._comments$.next(comments);
+    return of({})
+  }
+
+  public removeReply(reply){
+    const comments = this._commentsDb
+    const commentIdx = comments.findIndex(comment => comment.id === reply.parentCommentId)
+    const replyIdx = comments[commentIdx].replies.findIndex(d => d.id === reply.id)
+    comments[commentIdx].replies.splice(replyIdx,1)
+    localStorage.setItem(this.KEY, JSON.stringify([...comments]));
+    this._comments$.next(comments);
+    return of({})
   }
 }

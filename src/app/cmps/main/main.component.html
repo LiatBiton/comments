@@ -1,5 +1,5 @@
 <section class="main-app layout">
     <pick-user [users]="users$| async"></pick-user>
-    <app-comments [comments]="comments$|async"></app-comments>
+    <app-comments [comments]="comments$|async" [currUser]="currentUser$| async"></app-comments>
     <add-cmp [currUser]="currentUser$| async"></add-cmp>
 </section>

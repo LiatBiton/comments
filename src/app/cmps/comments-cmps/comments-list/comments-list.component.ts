@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { User } from 'src/app/models/user.model';
 import { Comment } from '../../../models/comment.model';
 
 @Component({
@@ -8,6 +9,7 @@ import { Comment } from '../../../models/comment.model';
 })
 export class CommentsListComponent implements OnInit {
   @Input() comments: Comment[]
+  @Input() currUser: User
   constructor() { }
 
   ngOnInit(): void {
