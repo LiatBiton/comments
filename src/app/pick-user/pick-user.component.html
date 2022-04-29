@@ -1,0 +1,6 @@
+<section class="pick-user">
+    <h2>User</h2>
+    <select *ngIf="users" (change)="onPickUser($event)">
+        <option *ngFor="let user of users" [value]="user.id">{{user.displayName}}</option>
+    </select>
+</section>
