@@ -1,5 +1,4 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
-import * as EventEmitter from 'events';
+import { Component, Input } from '@angular/core';
 import { User } from '../../../models/user.model';
 import { UserService } from '../../../services/user/user.service';
 
@@ -8,19 +7,12 @@ import { UserService } from '../../../services/user/user.service';
   templateUrl: './pick-user.component.html',
   styleUrls: ['./pick-user.component.scss']
 })
-export class PickUserComponent implements OnInit {
+export class PickUserComponent {
   @Input() users: User[]
-  // @Output() selectedUser = new EventEmitter
 
   constructor(private userService: UserService) { }
 
-  ngOnInit(): void {
-    console.log(this.users)
-  }
-
   onPickUser(ev){
-    console.log(ev.target)
     this.userService.setSelectedUser(ev.target.value)
   }
-
 }

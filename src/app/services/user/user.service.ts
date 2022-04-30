@@ -38,12 +38,5 @@ export class UserService {
     this.getUserById(id).subscribe((user) => {
       this._currentUser$.next(user);
     });
-    console.log('from service', this._currentUser$.value)
   }
-
 }
-
-
-
-
-

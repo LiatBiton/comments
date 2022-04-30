@@ -2,9 +2,7 @@ import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Comment } from 'src/app/models/comment.model';
 import { User } from 'src/app/models/user.model';
 import { CommentService } from 'src/app/services/comment/comment.service';
-import { UserService } from 'src/app/services/user/user.service';
 import { NgForm } from '@angular/forms';
-import { Observable, lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'add-cmp',
@@ -36,8 +34,5 @@ export class AddComponent implements OnInit {
     }
     form.reset();
     this.selectedComment = null
-    
   }
-
-
 }

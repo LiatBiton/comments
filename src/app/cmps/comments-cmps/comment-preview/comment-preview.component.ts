@@ -29,23 +29,20 @@ export class CommentsPreviewComponent implements OnInit {
   }
 
   onDelete(comment){
-    console.log(comment)
     comment.parentCommentId ?
-    this.commentService.removeReply(comment)
-    :
-    this.commentService.removeComment(comment.id)
+      this.commentService.removeReply(comment) :
+      this.commentService.removeComment(comment.id)
   }
 
   onEdit(){
     this.editMode = !this.editMode
-    console.log(this.editMode)
   }
+
   onSave(newTxt){
     this.editMode = false
     const newComment = this.comment
     newComment.txt = newTxt
-    newComment.createdAt = new Date
-    console.log(newComment)
+    newComment.createdAt = new Date()
     this.commentService.edit(newComment)
   }
 
@@ -53,5 +50,4 @@ export class CommentsPreviewComponent implements OnInit {
     ev.stopPropagation();
     this.commentService.setSelectedComment(this.comment.id)
   }
-
 }

@@ -119,17 +119,16 @@ export class CommentService {
   setSelectedComment(id: number | null) {
     if (id === null){
       this._selectedComment$.next(null);
-    }else{
+    } else {
       this.getCommentById(id).subscribe((comment) => {
         this._selectedComment$.next(comment);
       });
     }
-    
   }
 
   getCommentById(id: number): Observable<Comment> {
     const comment = this._commentsDb.find((comment) => comment.id == id);
-    return comment ? of(comment) : throwError(() => `comment id ${id} wasnt found`);
+    return of(comment)
   }
 
 }
