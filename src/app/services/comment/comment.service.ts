@@ -9,6 +9,8 @@ import data from '../../../assets/comments.json'
 })
 export class CommentService {
   private KEY = 'comments'
+  private DB_VERSION_KEY = 'db_version'
+  private CURRENT_DB_VERSION = 1;
 
   private _commentsDb: Comment[]
   private _comments$ = new BehaviorSubject<Comment[]>([]);
@@ -20,12 +22,24 @@ export class CommentService {
   constructor(private http: HttpClient) {
     let data = JSON.parse(localStorage.getItem(this.KEY));
 
-    if (!data) {
+    if (!data || this.shouldReloadJson()) {
       data = this.initDbFromJson();
+      this.updateDbVersion();
       localStorage.setItem(this.KEY, JSON.stringify([...data]));
     }
 
     this._commentsDb = data;
+  }
+
+  private shouldReloadJson() {
+    debugger;
+    const currentVersion = JSON.parse(localStorage.getItem(this.DB_VERSION_KEY));
+
+    return this.CURRENT_DB_VERSION != currentVersion;
+  }
+
+  private updateDbVersion() {
+    localStorage.setItem(this.DB_VERSION_KEY, this.CURRENT_DB_VERSION.toString());
   }
 
   private omitSubArray(array, itemsToRemove) {
@@ -79,8 +93,6 @@ export class CommentService {
     localStorage.setItem(this.KEY, JSON.stringify([...this._commentsDb]));
     this._comments$.next([...this._commentsDb])
   }
-
-  // TODO : Combine
 
   public async addReply(newReply: Comment) {
     const parent = this._selectedComment$.getValue()
