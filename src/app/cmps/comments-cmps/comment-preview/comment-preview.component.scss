@@ -1,78 +1,81 @@
-.comment-preview{
+.comment-container {
     display: flex;
-    margin-bottom: 15px;
+    flex-direction: column;
 
-    .user-pic{
-        border-radius: 50%;
-        margin-right: 10px;
-        height: 2.5rem;
-    }
-
-    .comment-action-btn{
-        background: none;
-        color: gray;
-        border: none;
-        padding: 0;
-        font: inherit;
-        cursor: pointer;
-        outline: inherit;
-        font-size: 13px;
-        font-weight: 600; 
-    }
-
-    .delete-btn{
-        margin-right: 10px;
-    }
-
-    .second-row-comment{
+    .comment-preview{
         display: flex;
-        margin-top: 3px;
+        margin-bottom: 15px;
 
-        .comment-date{
-            margin: 0px;
+        .user-pic{
+            border-radius: 50%;
             margin-right: 10px;
-            color: gray;
-            font-weight: 100;
-            font-size: 13px; 
+            height: 2.5rem;
         }
-    }
 
-    .user{
-        display: flex;
-        flex-direction: column;
-        display: flex;
-        flex-direction: column;
-        width: fit-content;
-        border-radius: 10px;
-        background-color: #f0f2f5;
-        padding: 0px 10px 10px 10px;
-        font-family: system-ui;
-        position: relative;
-    
-        .user-name{
-            margin: 0px;
-            margin-top: 10px;
+        .comment-action-btn{
+            background: none;
+            color: gray;
+            border: none;
+            padding: 0;
+            font: inherit;
+            cursor: pointer;
+            outline: inherit;
+            font-size: 13px;
+            font-weight: 600; 
         }
-    
-        .message{
-            margin: 0px;
-            font-weight: 400;
-            font-size: 16px;
+
+        .delete-btn{
+            margin-right: 10px;
+        }
+
+        .second-row-comment{
+            display: flex;
             margin-top: 3px;
+
+            .comment-date{
+                margin: 0px;
+                margin-right: 10px;
+                color: gray;
+                font-weight: 100;
+                font-size: 13px; 
+            }
         }
-    
-        .message-edit{
-            width: 100%;
-            height: 120px;
-            padding: 12px 20px;
-            box-sizing: border-box;
-            border: 0.5px solid #ccc;
-            border-radius: 8px;
-            background-color: #ffffff;
-            font-size: 16px;
-            resize: none;
-            font-family: sans-serif;
-            margin-top: 10px;
+
+        .user{
+            display: flex;
+            flex-direction: column;
+            width: fit-content;
+            border-radius: 10px;
+            background-color: #f0f2f5;
+            padding: 0px 10px 10px 10px;
+            font-family: system-ui;
+            position: relative;
+        
+            .user-name{
+                margin: 0px;
+                margin-top: 10px;
+            }
+        
+            .message{
+                margin: 0px;
+                font-weight: 400;
+                font-size: 16px;
+                margin-top: 3px;
+            }
+        
+            .message-edit{
+                width: 100%;
+                height: 120px;
+                padding: 12px 20px;
+                box-sizing: border-box;
+                border: 0.5px solid #ccc;
+                border-radius: 8px;
+                background-color: #ffffff;
+                font-size: 16px;
+                resize: none;
+                font-family: sans-serif;
+                margin-top: 10px;
+            }
         }
     }
 }

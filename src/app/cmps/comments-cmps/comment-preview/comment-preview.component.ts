@@ -29,9 +29,7 @@ export class CommentsPreviewComponent implements OnInit {
   }
 
   onDelete(comment){
-    comment.parentCommentId ?
-      this.commentService.removeReply(comment) :
-      this.commentService.removeComment(comment.id)
+    this.commentService.remove(comment)
   }
 
   onEdit(){
@@ -48,6 +46,6 @@ export class CommentsPreviewComponent implements OnInit {
 
   selectComment(ev: MouseEvent){
     ev.stopPropagation();
-    this.commentService.setSelectedComment(this.comment.id)
+    this.commentService.setSelectedComment(this.comment)
   }
 }

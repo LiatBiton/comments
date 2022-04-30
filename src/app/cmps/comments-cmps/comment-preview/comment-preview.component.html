@@ -1,4 +1,4 @@
-<section class="comment-container">
+<section class="comment-container" *ngIf="!comment.deletedAt">
     <div class="comment-preview">
         <img class="user-pic" src="../../assets/{{comment.ownerId}}.jpg">
         <ng-template [ngIf]="editMode" [ngIfElse]="regularMode">

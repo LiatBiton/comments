@@ -88,6 +88,14 @@
       "deletedAt": null
     },
     {
+      "id": 1818,
+      "parentCommentId": 18,
+      "ownerId": 4,
+      "txt": "Sorry?",
+      "createdAt": "2018-11-02T10:00:00.000Z",
+      "deletedAt": null
+    },
+    {
       "id": 19,
       "parentCommentId": 9,
       "ownerId": 3,
